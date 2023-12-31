@@ -12,6 +12,8 @@ namespace SupanthaPaul {
         [SerializeField] private float fallMultiplier;
         [SerializeField] private Transform groundCheck;
         [SerializeField] private float groundCheckRadius;
+        float stepPosion;                       //プレイヤーの踏みつけ判定の位置と踏みつけ判定の高さ
+        [SerializeField] float radiusFloat = 1.5f;
         [SerializeField] private LayerMask whatIsGround;
         [SerializeField] private int extraJumpCount = 1;
         [SerializeField] private GameObject jumpEffect;
@@ -34,6 +36,7 @@ namespace SupanthaPaul {
         public Vector2 grabRightOffset = new Vector2(0.16f, 0f);
         public Vector2 grabLeftOffset = new Vector2(-0.16f, 0f);
         public float grabCheckRadius = 0.24f;
+
         public float slideSpeed = 2.5f;
         public Vector2 wallJumpForce = new Vector2(10.5f, 18f);
         public Vector2 wallClimbForce = new Vector2(4f, 14f);
@@ -339,7 +342,8 @@ namespace SupanthaPaul {
                 transform.SetParent(collision.transform);
             }
 
-            float stepPosion = groundCheck.position.y + (groundCheckRadius * 1.5f);    //プレイヤーの踏みつけ判定の位置と踏みつけ判定の高さ
+            //stepPosion = groundCheck.position.y + (groundCheckRadius * radiusFloat);    //プレイヤーの踏みつけ判定の位置と踏みつけ判定の高さ
+            stepPosion = groundCheck.position.y + ((capcol.size.y / 2f) / 2);    //プレイヤーの踏みつけ判定の位置と踏みつけ判定の高さ
             if (isEnemy) {
                 foreach (ContactPoint2D p in collision.contacts) {
                     if (stepPosion > p.point.y) {     //対象物よりプレイヤーの踏みつけ判定が上だったら
